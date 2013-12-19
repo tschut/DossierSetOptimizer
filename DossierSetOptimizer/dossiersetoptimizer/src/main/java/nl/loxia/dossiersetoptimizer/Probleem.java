@@ -17,4 +17,8 @@ public class Probleem {
 
         return oplossing.getDossiers().size();
     }
+
+    public void addDossier(Dossier dossier) {
+        dossiers.add(dossier);
+    }
 }
