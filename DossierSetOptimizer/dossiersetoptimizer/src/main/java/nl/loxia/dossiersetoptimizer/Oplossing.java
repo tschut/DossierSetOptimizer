@@ -1,14 +1,22 @@
 package nl.loxia.dossiersetoptimizer;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class Oplossing {
-    private TreeSet<Integer> oplossing = new TreeSet<Integer>();
+    private TreeSet<Dossier> dossiers = new TreeSet<Dossier>();
 
-    // lager = beter
-    public int evalueer() {
-        // todo: test of we alle fouten hebben, anders veel strafpunten!
-
-        return oplossing.size();
+    public Set<String> getAlleMeldingen() {
+        Set<String> alleMeldingen = new HashSet<String>();
+        for (Dossier dossier : dossiers) {
+            alleMeldingen.addAll(dossier.getMeldingen());
+        }
+        return alleMeldingen;
     }
+
+    public Set<Dossier> getDossiers() {
+        return dossiers;
+    }
+
 }
