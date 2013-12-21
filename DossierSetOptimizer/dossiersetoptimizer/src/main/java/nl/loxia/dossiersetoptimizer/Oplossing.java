@@ -1,22 +1,22 @@
 package nl.loxia.dossiersetoptimizer;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.BitSet;
+import java.util.Random;
 
 public class Oplossing {
-    private TreeSet<Dossier> dossiers = new TreeSet<Dossier>();
+    private static final Random rng = new Random();
 
-    public Set<String> getAlleMeldingen() {
-        Set<String> alleMeldingen = new HashSet<String>();
-        for (Dossier dossier : dossiers) {
-            alleMeldingen.addAll(dossier.getMeldingen());
+    private BitSet              selectie;
+
+    public Oplossing(Probleem probleem) {
+        selectie = new BitSet(probleem.getDossiers().size());
+
+        for (int i = 0; i < probleem.getDossiers().size(); ++i) {
+            selectie.set(i, rng.nextBoolean());
         }
-        return alleMeldingen;
     }
 
-    public Set<Dossier> getDossiers() {
-        return dossiers;
+    public BitSet getSelectie() {
+        return selectie;
     }
-
 }

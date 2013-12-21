@@ -1,24 +1,64 @@
 package nl.loxia.dossiersetoptimizer;
 
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Probleem {
-    private Set<Dossier>     dossiers                    = new HashSet<Dossier>();
+    private List<Dossier>    dossiers                    = new ArrayList<Dossier>();
     private Set<String>      alleMeldingen               = new HashSet<String>();
 
-    private static final int NIET_ALLE_MELDINGEN_PENALTY = 1000;
+    private static final int NIET_ALLE_MELDINGEN_PENALTY = 100000;
 
     // lager = beter
     public int evalueer(Oplossing oplossing) {
-        if (alleMeldingen.size() != oplossing.getAlleMeldingen().size()) {
+        if (alleMeldingen.size() != uniekeMeldingenInOplossing(oplossing)) {
             return NIET_ALLE_MELDINGEN_PENALTY;
         }
 
-        return oplossing.getDossiers().size();
+        return bladenInOplossing(oplossing);
+    }
+
+    public void printOplossing(Oplossing oplossing) {
+        StringBuilder sb = new StringBuilder();
+        // TODO tijd printen
+        sb.append(bladenInOplossing(oplossing));
+        BitSet selectie = oplossing.getSelectie();
+        for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {
+            sb.append(",").append(dossiers.get(i).getNaam());
+        }
+        System.out.println(sb.toString());
+    }
+
+    private int bladenInOplossing(Oplossing oplossing) {
+        BitSet selectie = oplossing.getSelectie();
+
+        int bladen = 0;
+        for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {
+            bladen += dossiers.get(i).getBladCount();
+        }
+
+        return bladen;
+    }
+
+    private int uniekeMeldingenInOplossing(Oplossing oplossing) {
+        BitSet selectie = oplossing.getSelectie();
+
+        Set<String> meldingen = new HashSet<String>();
+        for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {
+            meldingen.addAll(dossiers.get(i).getMeldingen());
+        }
+
+        return meldingen.size();
     }
 
     public void addDossier(Dossier dossier) {
         dossiers.add(dossier);
+    }
+
+    public List<Dossier> getDossiers() {
+        return dossiers;
     }
 }

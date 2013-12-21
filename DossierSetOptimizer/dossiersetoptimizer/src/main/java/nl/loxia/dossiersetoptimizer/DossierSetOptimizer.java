@@ -8,5 +8,7 @@ public class DossierSetOptimizer {
         probleem.addDossier(new Dossier("een", Arrays.asList("a", "b"), 3));
         probleem.addDossier(new Dossier("twee", Arrays.asList("c", "b"), 2));
         probleem.addDossier(new Dossier("drie", Arrays.asList("a"), 1));
+
+        Algoritme algoritme = new Algoritme(probleem);
     }
 }
