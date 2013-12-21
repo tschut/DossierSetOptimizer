@@ -46,7 +46,7 @@ public class Probleem {
     private int uniekeMeldingenInOplossing(Oplossing oplossing) {
         BitSet selectie = oplossing.getSelectie();
 
-        Set<String> meldingen = new HashSet<String>();
+        Set<Integer> meldingen = new HashSet<Integer>();
         for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {
             meldingen.addAll(dossiers.get(i).getMeldingen());
         }

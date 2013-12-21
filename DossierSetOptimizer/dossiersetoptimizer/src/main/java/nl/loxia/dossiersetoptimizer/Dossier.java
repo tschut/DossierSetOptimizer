@@ -3,11 +3,11 @@ package nl.loxia.dossiersetoptimizer;
 import java.util.List;
 
 public class Dossier implements Comparable<Dossier> {
-    private String       naam;
-    private List<String> meldingen;
-    private int          bladCount;
+    private String        naam;
+    private List<Integer> meldingen;
+    private int           bladCount;
 
-    public Dossier(String naam, List<String> meldingen, int bladCount) {
+    public Dossier(String naam, List<Integer> meldingen, int bladCount) {
         this.naam = naam;
         this.meldingen = meldingen;
         this.bladCount = bladCount;
@@ -17,7 +17,7 @@ public class Dossier implements Comparable<Dossier> {
         return naam;
     }
 
-    public List<String> getMeldingen() {
+    public List<Integer> getMeldingen() {
         return meldingen;
     }
 
