@@ -7,21 +7,27 @@ import java.util.Set;
 
 public class Probleem {
     private List<Dossier>    dossiers;
-    private Set<String>      alleMeldingen               = new HashSet<String>();
+    private Set<Integer>     alleMeldingen               = new HashSet<Integer>();
+    private int              totaalBladen                = 0;
 
-    private static final int NIET_ALLE_MELDINGEN_PENALTY = 100000;
+    private static final int NIET_ALLE_MELDINGEN_PENALTY = -100;
 
     public Probleem(List<Dossier> dossiers) {
         this.dossiers = dossiers;
+
+        for (Dossier dossier : dossiers) {
+            alleMeldingen.addAll(dossier.getMeldingen());
+            totaalBladen += dossier.getBladCount();
+        }
     }
 
-    // lager = beter
+    // hoger = beter
     public int evalueer(Oplossing oplossing) {
-        if (alleMeldingen.size() != uniekeMeldingenInOplossing(oplossing)) {
+        if (!isGeldigeOplossing(oplossing)) {
             return NIET_ALLE_MELDINGEN_PENALTY;
         }
 
-        return bladenInOplossing(oplossing);
+        return totaalBladen - bladenInOplossing(oplossing);
     }
 
     public void printOplossing(Oplossing oplossing) {
@@ -63,5 +69,9 @@ public class Probleem {
 
     public List<Dossier> getDossiers() {
         return dossiers;
+    }
+
+    public boolean isGeldigeOplossing(Oplossing oplossing) {
+        return alleMeldingen.size() == uniekeMeldingenInOplossing(oplossing);
     }
 }
