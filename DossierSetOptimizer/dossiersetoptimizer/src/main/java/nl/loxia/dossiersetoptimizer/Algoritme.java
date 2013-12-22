@@ -1,6 +1,6 @@
 package nl.loxia.dossiersetoptimizer;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Algoritme {
@@ -8,12 +8,18 @@ public class Algoritme {
     private Generatie        huidigeGeneratie;
     private int              generatieCounter = 0;
 
-    private List<IMutatie>   mutaties         = Arrays.asList();
+    private List<IMutatie>   mutaties         = new ArrayList<IMutatie>();
 
     public Algoritme(Probleem probleem) {
         huidigeGeneratie = new Generatie(GENERATIE_SIZE);
         huidigeGeneratie.populateRandom(probleem);
 
+        mutaties.add(new LocalOptimizeRemoveUnnecessary());
+
+        solve(probleem);
+    }
+
+    private void solve(Probleem probleem) {
         boolean run = true;
         while (run) {
             probleem.printOplossing(generatieCounter + ": ", huidigeGeneratie.getBesteOplossing());
@@ -34,10 +40,10 @@ public class Algoritme {
     }
 
     private void muteer(Generatie generatie) {
-        for (Oplossing oplossing : generatie.getPopulatie()) {
+        for (int i = 1; i < generatie.getPopulatie().size(); ++i) {
             for (IMutatie mutatie : mutaties) {
                 if (mutatie.mutatieVindtPlaats()) {
-                    mutatie.muteer(oplossing);
+                    mutatie.muteer(generatie.getPopulatie().get(i));
                 }
             }
         }

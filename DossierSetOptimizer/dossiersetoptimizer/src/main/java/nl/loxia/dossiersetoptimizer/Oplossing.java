@@ -4,16 +4,17 @@ import java.util.BitSet;
 import java.util.Random;
 
 public class Oplossing {
-    private static final Random rng = new Random();
+    private static final Random rng   = new Random();
 
     private BitSet              selectie;
     private int                 fitness;
     private Probleem            probleem;
 
+    private boolean             dirty = true;         ;
+
     public Oplossing(Probleem probleem, BitSet dna) {
         this.probleem = probleem;
         selectie = dna;
-        fitness = probleem.evalueer(this);
     }
 
     public Oplossing(Probleem probleem) {
@@ -27,15 +28,22 @@ public class Oplossing {
         while (!probleem.isGeldigeOplossing(this)) {
             selectie.set(rng.nextInt(probleem.getDossiers().size()));
         }
-
-        fitness = probleem.evalueer(this);
     }
 
     public BitSet getSelectie() {
         return selectie;
     }
 
+    public int getFitness(boolean b) {
+        dirty = true;
+        return getFitness();
+    }
+
     public int getFitness() {
+        if (dirty) {
+            fitness = probleem.evalueer(this);
+            dirty = false;
+        }
         return fitness;
     }
 
@@ -55,6 +63,6 @@ public class Oplossing {
 
     @Override
     public String toString() {
-        return "Fitness: " + fitness;
+        return "Fitness: " + getFitness();
     }
 }
