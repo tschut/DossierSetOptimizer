@@ -8,8 +8,16 @@ public class Oplossing {
 
     private BitSet              selectie;
     private int                 fitness;
+    private Probleem            probleem;
+
+    public Oplossing(Probleem probleem, BitSet dna) {
+        this.probleem = probleem;
+        selectie = dna;
+        fitness = probleem.evalueer(this);
+    }
 
     public Oplossing(Probleem probleem) {
+        this.probleem = probleem;
         selectie = new BitSet(probleem.getDossiers().size());
 
         for (int i = 0; i < probleem.getDossiers().size(); ++i) {
@@ -29,6 +37,20 @@ public class Oplossing {
 
     public int getFitness() {
         return fitness;
+    }
+
+    public Oplossing crossover(Oplossing parent2) {
+        BitSet dna = new BitSet();
+
+        for (int i = 0; i < probleem.getDossiers().size(); ++i) {
+            if (rng.nextBoolean()) {
+                dna.set(i, selectie.get(i));
+            } else {
+                dna.set(i, parent2.getSelectie().get(i));
+            }
+        }
+
+        return new Oplossing(probleem, dna);
     }
 
     @Override

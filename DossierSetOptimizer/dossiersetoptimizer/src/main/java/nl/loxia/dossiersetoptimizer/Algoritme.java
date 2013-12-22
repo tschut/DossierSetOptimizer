@@ -14,11 +14,17 @@ public class Algoritme {
         boolean run = true;
         while (run) {
             probleem.printOplossing(generatieCounter + ": ", huidigeGeneratie.getBesteOplossing());
+            // huidigeGeneratie.printPopulatie();
 
             Generatie nieuweGeneratie = new Generatie(GENERATIE_SIZE);
             nieuweGeneratie.populateCrossover(huidigeGeneratie);
 
+            huidigeGeneratie = nieuweGeneratie;
             generatieCounter++;
+
+            if (generatieCounter > 1000) {
+                run = false;
+            }
         }
     }
 }
