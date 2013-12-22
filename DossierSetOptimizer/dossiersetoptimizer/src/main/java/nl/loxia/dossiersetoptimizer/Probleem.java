@@ -1,16 +1,19 @@
 package nl.loxia.dossiersetoptimizer;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Probleem {
-    private List<Dossier>    dossiers                    = new ArrayList<Dossier>();
+    private List<Dossier>    dossiers;
     private Set<String>      alleMeldingen               = new HashSet<String>();
 
     private static final int NIET_ALLE_MELDINGEN_PENALTY = 100000;
+
+    public Probleem(List<Dossier> dossiers) {
+        this.dossiers = dossiers;
+    }
 
     // lager = beter
     public int evalueer(Oplossing oplossing) {

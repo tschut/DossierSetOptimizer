@@ -13,6 +13,7 @@ public class InputParser {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            reader.readLine(); // skip header
             for (String line; (line = reader.readLine()) != null;) {
                 result.add(processLine(line));
             }
