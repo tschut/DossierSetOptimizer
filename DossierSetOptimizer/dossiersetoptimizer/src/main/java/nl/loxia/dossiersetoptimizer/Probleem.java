@@ -30,9 +30,9 @@ public class Probleem {
         return totaalBladen - bladenInOplossing(oplossing);
     }
 
-    public void printOplossing(Oplossing oplossing) {
+    public void printOplossing(String prefix, Oplossing oplossing) {
         StringBuilder sb = new StringBuilder();
-        // TODO tijd printen
+        sb.append(prefix);
         sb.append(bladenInOplossing(oplossing));
         BitSet selectie = oplossing.getSelectie();
         for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {

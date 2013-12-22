@@ -28,4 +28,12 @@ public class Generatie {
             }
         });
     }
+
+    public Oplossing getBesteOplossing() {
+        return populatie.get(0);
+    }
+
+    public void populateCrossover(Generatie huidigeGeneratie) {
+        // TODO Auto-generated method stub
+    }
 }
