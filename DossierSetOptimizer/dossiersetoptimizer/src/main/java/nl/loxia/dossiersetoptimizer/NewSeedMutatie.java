@@ -11,17 +11,22 @@ public class NewSeedMutatie implements IMutatie {
         this.probleem = probleem;
     }
 
+    @Override
     public boolean mutatieVindtPlaats() {
         return rng.nextFloat() < MUTATIE_FACTOR;
     }
 
+    @Override
     public void muteer(Oplossing oplossing) {
         for (int i = 0; i < oplossing.size(); ++i) {
             oplossing.getSelectie().set(i, rng.nextBoolean());
         }
 
         while (!probleem.isGeldigeOplossing(oplossing)) {
-            oplossing.getSelectie().set(rng.nextInt(oplossing.size()));
+            int bit = oplossing.getSelectie().nextClearBit(rng.nextInt(oplossing.size()));
+            if (bit < oplossing.size()) {
+                oplossing.getSelectie().set(bit);
+            }
         }
         oplossing.setDirty();
     }

@@ -1,23 +1,23 @@
 package nl.loxia.dossiersetoptimizer;
 
-import java.util.List;
+import java.util.BitSet;
 
 public class Dossier implements Comparable<Dossier> {
-    private String        naam;
-    private List<Integer> meldingen;
-    private int           bladCount;
+    private String naam;
+    private BitSet meldingen;
+    private int    bladCount;
 
-    public Dossier(String naam, List<Integer> meldingen, int bladCount) {
+    public Dossier(String naam, BitSet meldingen, int bladCount) {
         this.naam = naam;
-        this.meldingen = meldingen;
         this.bladCount = bladCount;
+        this.meldingen = meldingen;
     }
 
     public String getNaam() {
         return naam;
     }
 
-    public List<Integer> getMeldingen() {
+    public BitSet getMeldingen() {
         return meldingen;
     }
 
@@ -50,6 +50,7 @@ public class Dossier implements Comparable<Dossier> {
         return true;
     }
 
+    @Override
     public int compareTo(Dossier other) {
         return naam.compareTo(other.naam);
     }

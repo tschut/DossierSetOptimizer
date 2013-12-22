@@ -1,24 +1,24 @@
 package nl.loxia.dossiersetoptimizer;
 
 import java.util.BitSet;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Probleem {
     private List<Dossier>    dossiers;
-    private Set<Integer>     alleMeldingen               = new HashSet<Integer>();
     private int              totaalBladen                = 0;
+    private int              totaalMeldingen             = 0;
 
     private static final int NIET_ALLE_MELDINGEN_PENALTY = -100;
 
     public Probleem(List<Dossier> dossiers) {
         this.dossiers = dossiers;
 
+        BitSet alleMeldingen = new BitSet();
         for (Dossier dossier : dossiers) {
-            alleMeldingen.addAll(dossier.getMeldingen());
+            alleMeldingen.or(dossier.getMeldingen());
             totaalBladen += dossier.getBladCount();
         }
+        totaalMeldingen = alleMeldingen.cardinality();
     }
 
     // hoger = beter
@@ -56,12 +56,12 @@ public class Probleem {
     private int uniekeMeldingenInOplossing(Oplossing oplossing) {
         BitSet selectie = oplossing.getSelectie();
 
-        Set<Integer> meldingen = new HashSet<Integer>();
+        BitSet meldingen = new BitSet();
         for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {
-            meldingen.addAll(dossiers.get(i).getMeldingen());
+            meldingen.or(dossiers.get(i).getMeldingen());
         }
 
-        return meldingen.size();
+        return meldingen.cardinality();
     }
 
     public void addDossier(Dossier dossier) {
@@ -73,6 +73,6 @@ public class Probleem {
     }
 
     public boolean isGeldigeOplossing(Oplossing oplossing) {
-        return alleMeldingen.size() == uniekeMeldingenInOplossing(oplossing);
+        return totaalMeldingen == uniekeMeldingenInOplossing(oplossing);
     }
 }

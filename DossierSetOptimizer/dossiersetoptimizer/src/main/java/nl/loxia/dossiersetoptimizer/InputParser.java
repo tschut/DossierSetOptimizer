@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 public class InputParser {
@@ -32,11 +33,11 @@ public class InputParser {
 
         String naam = split[0];
         int bladCount = Integer.parseInt(split[1]);
-        List<Integer> meldingen = new ArrayList<Integer>();
+        BitSet meldingen = new BitSet();
 
         for (int i = 2; i < split.length; ++i) {
             if (!split[i].isEmpty()) {
-                meldingen.add(i);
+                meldingen.set(i);
             }
         }
 

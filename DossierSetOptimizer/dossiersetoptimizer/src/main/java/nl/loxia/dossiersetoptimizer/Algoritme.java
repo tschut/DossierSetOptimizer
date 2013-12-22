@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Algoritme {
-    private static final int GENERATIE_SIZE   = 200;
+    private static final int GENERATIE_SIZE   = 500;
     private Generatie        huidigeGeneratie;
     private int              generatieCounter = 0;
 
