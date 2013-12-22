@@ -75,4 +75,8 @@ public class Generatie {
         }
         System.out.println();
     }
+
+    public List<Oplossing> getPopulatie() {
+        return populatie;
+    }
 }
