@@ -34,10 +34,11 @@ public class Probleem {
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
         sb.append(bladenInOplossing(oplossing));
-        BitSet selectie = oplossing.getSelectie();
-        for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {
-            sb.append(",").append(dossiers.get(i).getNaam());
-        }
+        // BitSet selectie = oplossing.getSelectie();
+        // for (int i = selectie.nextSetBit(0); i >= 0; i =
+        // selectie.nextSetBit(i + 1)) {
+        // sb.append(",").append(dossiers.get(i).getNaam());
+        // }
         System.out.println(sb.toString());
     }
 

@@ -65,4 +65,12 @@ public class Oplossing {
     public String toString() {
         return "Fitness: " + getFitness();
     }
+
+    public int size() {
+        return probleem.getDossiers().size();
+    }
+
+    public void setDirty() {
+        dirty = true;
+    }
 }

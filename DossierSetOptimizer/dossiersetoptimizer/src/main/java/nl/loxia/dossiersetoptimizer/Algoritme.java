@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Algoritme {
-    private static final int GENERATIE_SIZE   = 100;
+    private static final int GENERATIE_SIZE   = 200;
     private Generatie        huidigeGeneratie;
     private int              generatieCounter = 0;
 
@@ -14,6 +14,9 @@ public class Algoritme {
         huidigeGeneratie = new Generatie(GENERATIE_SIZE);
         huidigeGeneratie.populateRandom(probleem);
 
+        mutaties.add(new RandomBitFlip());
+        mutaties.add(new RandomMultiBitFlip());
+        mutaties.add(new NewSeedMutatie(probleem));
         mutaties.add(new LocalOptimizeRemoveUnnecessary());
 
         solve(probleem);
