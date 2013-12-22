@@ -2,19 +2,21 @@ package nl.loxia.dossiersetoptimizer;
 
 import java.util.Random;
 
-public class RandomMultiBitFlip implements IMutatie {
+public class RandomMultiFlip implements IMutatie {
     private static final Random rng            = new Random();
     private static final float  MUTATIE_FACTOR = 0.05f;
 
+    @Override
     public boolean mutatieVindtPlaats() {
         return rng.nextFloat() < MUTATIE_FACTOR;
     }
 
+    @Override
     public void muteer(Oplossing oplossing) {
-        int point1 = rng.nextInt(oplossing.size());
-        int point2 = rng.nextInt(oplossing.size());
-
-        oplossing.getSelectie().flip(Math.min(point1, point2), Math.max(point1, point2));
+        int count = rng.nextInt(10);
+        for (int i = 0; i < count; ++i) {
+            oplossing.getSelectie().flip(rng.nextInt(oplossing.size()));
+        }
         oplossing.setDirty();
     }
 }
