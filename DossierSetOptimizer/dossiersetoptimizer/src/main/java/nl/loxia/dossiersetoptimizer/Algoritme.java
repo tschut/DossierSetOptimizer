@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Algoritme {
-    private static final int GENERATIE_SIZE   = 100;
+    private static final int GENERATIE_SIZE = 100;
     private Generatie        huidigeGeneratie;
-    private int              generatieCounter = 0;
-    private long             startTime        = System.currentTimeMillis();
+    private long             startTime      = System.currentTimeMillis();
 
-    private List<IMutatie>   mutaties         = new ArrayList<IMutatie>();
+    private List<IMutatie>   mutaties       = new ArrayList<IMutatie>();
 
     public Algoritme(Probleem probleem) {
         huidigeGeneratie = new Generatie(GENERATIE_SIZE);
@@ -42,7 +41,6 @@ public class Algoritme {
             muteer(nieuweGeneratie);
 
             huidigeGeneratie = nieuweGeneratie;
-            generatieCounter++;
         }
     }
 
