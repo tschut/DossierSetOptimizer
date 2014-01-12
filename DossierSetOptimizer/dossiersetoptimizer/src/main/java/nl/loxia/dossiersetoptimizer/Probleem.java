@@ -30,10 +30,10 @@ public class Probleem {
         return totaalBladen - bladenInOplossing(oplossing);
     }
 
-    public void printOplossing(String prefix, Oplossing oplossing) {
+    public void printOplossing(String prefix, Oplossing oplossing, int bladenInOplossing) {
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
-        sb.append(bladenInOplossing(oplossing));
+        sb.append(bladenInOplossing);
         BitSet selectie = oplossing.getSelectie();
         for (int i = selectie.nextSetBit(0); i >= 0; i = selectie.nextSetBit(i + 1)) {
             sb.append(",").append(dossiers.get(i).getNaam());

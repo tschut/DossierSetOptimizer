@@ -3,14 +3,17 @@ package nl.loxia.dossiersetoptimizer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Algoritme {
-    private static final int GENERATIE_SIZE = 100;
+public class Algoritme extends Thread {
+    private static final int GENERATIE_SIZE = 20;
     private Generatie        huidigeGeneratie;
-    private long             startTime      = System.currentTimeMillis();
 
     private List<IMutatie>   mutaties       = new ArrayList<IMutatie>();
+    private Distributor      distributor;
+    private Probleem         probleem;
 
-    public Algoritme(Probleem probleem) {
+    public Algoritme(Probleem probleem, Distributor distributor) {
+        this.probleem = probleem;
+        this.distributor = distributor;
         huidigeGeneratie = new Generatie(GENERATIE_SIZE);
         huidigeGeneratie.populateRandom(probleem);
 
@@ -21,7 +24,10 @@ public class Algoritme {
         mutaties.add(new LocalOptimizeRemoveUnnecessary(0.01f));
         mutaties.add(new LocalOptimizeSwitchBit(0.01f));
         mutaties.add(new AddAndOptimize(0.01f));
+    }
 
+    @Override
+    public void run() {
         solve(probleem);
     }
 
@@ -31,7 +37,7 @@ public class Algoritme {
         while (run) {
             int bladenInOplossing = probleem.bladenInOplossing(huidigeGeneratie.getBesteOplossing());
             if (beste == -1 || bladenInOplossing < beste) {
-                probleem.printOplossing((System.currentTimeMillis() - startTime) / 1000 + ",", huidigeGeneratie.getBesteOplossing());
+                distributor.callback(huidigeGeneratie.getBesteOplossing(), bladenInOplossing);
                 beste = bladenInOplossing;
             }
 
