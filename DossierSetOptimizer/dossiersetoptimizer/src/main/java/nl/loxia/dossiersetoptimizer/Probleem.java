@@ -41,7 +41,7 @@ public class Probleem {
         System.out.println(sb.toString());
     }
 
-    private int bladenInOplossing(Oplossing oplossing) {
+    public int bladenInOplossing(Oplossing oplossing) {
         BitSet selectie = oplossing.getSelectie();
 
         int bladen = 0;

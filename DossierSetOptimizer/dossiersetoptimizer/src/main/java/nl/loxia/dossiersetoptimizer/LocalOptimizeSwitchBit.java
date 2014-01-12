@@ -4,12 +4,16 @@ import java.util.BitSet;
 import java.util.Random;
 
 public class LocalOptimizeSwitchBit implements IMutatie {
-    private static final Random rng            = new Random();
-    private static final float  MUTATIE_FACTOR = 0.05f;
+    private static final Random rng = new Random();
+    private float               mutatieFactor;
+
+    public LocalOptimizeSwitchBit(float mutatieFactor) {
+        this.mutatieFactor = mutatieFactor;
+    }
 
     @Override
     public boolean mutatieVindtPlaats() {
-        return rng.nextFloat() < MUTATIE_FACTOR;
+        return rng.nextFloat() < mutatieFactor;
     }
 
     @Override

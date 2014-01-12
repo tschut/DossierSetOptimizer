@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Algoritme {
-    private static final int GENERATIE_SIZE   = 1000;
+    private static final int GENERATIE_SIZE   = 100;
     private Generatie        huidigeGeneratie;
     private int              generatieCounter = 0;
+    private long             startTime        = System.currentTimeMillis();
 
     private List<IMutatie>   mutaties         = new ArrayList<IMutatie>();
 
@@ -14,21 +15,26 @@ public class Algoritme {
         huidigeGeneratie = new Generatie(GENERATIE_SIZE);
         huidigeGeneratie.populateRandom(probleem);
 
-        mutaties.add(new RandomBitFlip());
-        mutaties.add(new RandomMultiFlip());
-        mutaties.add(new RandomRangeFlip());
-        mutaties.add(new NewSeedMutatie(probleem));
-        mutaties.add(new LocalOptimizeRemoveUnnecessary());
-        mutaties.add(new LocalOptimizeSwitchBit());
+        mutaties.add(new RandomBitFlip(0.05f));
+        mutaties.add(new RandomMultiFlip(0.05f));
+        mutaties.add(new RandomRangeFlip(0.02f));
+        mutaties.add(new NewSeedMutatie(probleem, 0.1f));
+        mutaties.add(new LocalOptimizeRemoveUnnecessary(0.01f));
+        mutaties.add(new LocalOptimizeSwitchBit(0.01f));
+        mutaties.add(new AddAndOptimize(0.01f));
 
         solve(probleem);
     }
 
     private void solve(Probleem probleem) {
         boolean run = true;
+        int beste = -1;
         while (run) {
-            probleem.printOplossing(generatieCounter + ": ", huidigeGeneratie.getBesteOplossing());
-            // huidigeGeneratie.printPopulatie();
+            int bladenInOplossing = probleem.bladenInOplossing(huidigeGeneratie.getBesteOplossing());
+            if (beste == -1 || bladenInOplossing < beste) {
+                probleem.printOplossing((System.currentTimeMillis() - startTime) / 1000 + ",", huidigeGeneratie.getBesteOplossing());
+                beste = bladenInOplossing;
+            }
 
             Generatie nieuweGeneratie = new Generatie(GENERATIE_SIZE);
             nieuweGeneratie.populateCrossover(huidigeGeneratie);
@@ -37,10 +43,6 @@ public class Algoritme {
 
             huidigeGeneratie = nieuweGeneratie;
             generatieCounter++;
-
-            if (generatieCounter > 1000) {
-                run = false;
-            }
         }
     }
 

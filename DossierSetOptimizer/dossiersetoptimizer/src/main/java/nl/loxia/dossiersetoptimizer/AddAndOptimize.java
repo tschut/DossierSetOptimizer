@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class LocalOptimizeRemoveUnnecessary implements IMutatie {
+public class AddAndOptimize implements IMutatie {
     private static final Random rng = new Random();
     private float               mutatieFactor;
 
-    public LocalOptimizeRemoveUnnecessary(float mutatieFactor) {
+    public AddAndOptimize(float mutatieFactor) {
         this.mutatieFactor = mutatieFactor;
     }
 
@@ -21,6 +21,16 @@ public class LocalOptimizeRemoveUnnecessary implements IMutatie {
 
     @Override
     public void muteer(Oplossing oplossing) {
+        int count = rng.nextInt(oplossing.size());
+        for (int i = 0; i < count; ++i) {
+            oplossing.getSelectie().set(rng.nextInt(oplossing.size()));
+        }
+
+        localOptimize(oplossing);
+        localOptimize(oplossing);
+    }
+
+    private void localOptimize(Oplossing oplossing) {
         int startFitness = oplossing.getFitness();
         BitSet selectie = oplossing.getSelectie();
 
