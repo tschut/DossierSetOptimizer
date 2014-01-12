@@ -36,7 +36,7 @@ public class InputParser {
         BitSet meldingen = new BitSet();
 
         for (int i = 2; i < split.length; ++i) {
-            if (!split[i].isEmpty()) {
+            if (!split[i].isEmpty() && split[i].equals("1")) {
                 meldingen.set(i);
             }
         }
